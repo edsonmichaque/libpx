@@ -1,6 +1,11 @@
 package libpay
 
+type Amount struct {
+	Currency string
+	Value    int64
+}
+
 type Gateway interface {
-	Authorize(amount int64, card Card, opts ...interface{}) (*Authorization, error)
-	Capture(amount int64, auth Authorization, opts ...interface{}) (*Capture, error)
+	Authorize(card Card, amount Amount, opts ...interface{}) (*Authorization, error)
+	Capture(auth Authorization, amount Amount, opts ...interface{}) (*Capture, error)
 }
