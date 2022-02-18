@@ -1,11 +1,28 @@
 package libpay
 
+type Gateway interface {
+	Authorize(card Card, amount Amount, opts ...Option) (*Authorization, error)
+	Capture(auth Authorization, amount Amount, opts ...Option) (*Capture, error)
+	Purchase(auth Authorization, amount Amount, opts ...Option) (*Purchase, error)
+	Refund(auth Authorization, amount Amount) (*Refund, error)
+	Void(auth Authorization) (*Capture, error)
+	Verify(card Card, opts ...Option) (*Verification, error)
+}
+
 type Amount struct {
 	Currency string
 	Value    int64
 }
 
 type Option func(*Options)
+
+type Options struct {
+	ShippingAddress   string
+	BillingAddress    string
+	IP                string
+	Email             string
+	AdditionalOptions []AdditionalOption
+}
 
 func WithShippingAddress(a string) Option {
 	return func(o *Options) {
@@ -19,33 +36,17 @@ func WithBillingAddress(a string) Option {
 	}
 }
 
-func WithExtra(key, value string) Option {
+func WithAdditionalOption(name, value string) Option {
 	return func(o *Options) {
-		if o.Extra == nil {
-			o.Extra = make([]Extra, 0)
+		if o.AdditionalOptions == nil {
+			o.AdditionalOptions = make([]AdditionalOption, 0)
 		}
 
-		o.Extra = append(o.Extra, Extra{Key: key, Value: value})
+		o.AdditionalOptions = append(o.AdditionalOptions, AdditionalOption{Name: name, Value: value})
 	}
 }
 
-type Options struct {
-	ShippingAddress string
-	BillingAddress  string
-	IP              string
-	Extra           []Extra
-}
-
-type Extra struct {
-	Key   string
+type AdditionalOption struct {
+	Name  string
 	Value interface{}
-}
-
-type Gateway interface {
-	Authorize(card Card, amount Amount, opts ...Option) (*Authorization, error)
-	Capture(auth Authorization, amount Amount, opts ...Option) (*Capture, error)
-	Purchase(auth Authorization, amount Amount, opts ...Option) (*Purchase, error)
-	Refund(auth Authorization, amount Amount) (*Refund, error)
-	Void(auth Authorization) (*Capture, error)
-	Verify(card Card, opts ...Option) (*Verification, error)
 }
