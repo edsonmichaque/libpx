@@ -38,14 +38,14 @@ type Options struct {
 
 type Extra struct {
 	Key   string
-	Value string
+	Value interface{}
 }
 
 type Gateway interface {
 	Authorize(card Card, amount Amount, opts ...Option) (*Authorization, error)
 	Capture(auth Authorization, amount Amount, opts ...Option) (*Capture, error)
-	Purchase(auth Authorization, amount Amount, opts ...Option) (*Capture, error)
-	Refund(auth Authorization, amount Amount) (*Capture, error)
+	Purchase(auth Authorization, amount Amount, opts ...Option) (*Purchase, error)
+	Refund(auth Authorization, amount Amount) (*Refund, error)
 	Void(auth Authorization) (*Capture, error)
-	Verify(card Card, opts ...Option) (*Capture, error)
+	Verify(card Card, opts ...Option) (*Verification, error)
 }
