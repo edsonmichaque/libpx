@@ -36,27 +36,6 @@ type Address struct {
 	Phone    string
 }
 
-type Network int
-
-const (
-	NetworkVisa = iota
-	NetworkMastercard
-)
-
-type CreditCard struct {
-	Number          string
-	ExpirationMonth string
-	ExpirationYear  string
-	CVV             string
-	FirstName       string
-	LastName        string
-	Type            Network
-}
-
-func (c CreditCard) Validate() error {
-	return nil
-}
-
 type Void struct{}
 
 type Capabilities struct {

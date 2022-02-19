@@ -4,24 +4,17 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/edsonmichaque/libpx/card"
 	"github.com/edsonmichaque/libpx/currency"
 )
 
 type Gateway interface {
-	Authorize(CreditCard, Amount, ...Option) (*Authorization, error)
+	Authorize(card.Card, Amount, ...Option) (*Authorization, error)
 	Capture(Authorization, Amount, ...Option) (*Capture, error)
 	Purchase(Authorization, Amount, ...Option) (*Purchase, error)
 	Refund(Authorization, Amount) (*Refund, error)
 	Void(Authorization) (*Void, error)
-	Verify(CreditCard, ...Option) (*Verification, error)
-}
-
-type ImprovedGateway interface {
-	Gateway
-	Credit(CreditCard, Amount, ...Option)
-	Recurring(CreditCard, Amount, ...Option)
-	Store(CreditCard, ...Option)
-	Unstore(CreditCard, ...Option)
+	Verify(card.Card, ...Option) (*Verification, error)
 }
 
 type Amount struct {
