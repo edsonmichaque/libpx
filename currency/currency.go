@@ -1,6 +1,9 @@
 package currency
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 type Currency struct {
 	Code      string
@@ -18,7 +21,7 @@ func From(code string) (*Currency, error) {
 		"MZN": MZN,
 	}
 
-	if currency, ok := currencies[code]; ok {
+	if currency, ok := currencies[strings.ToUpper(code)]; ok {
 		return &currency, nil
 	}
 
