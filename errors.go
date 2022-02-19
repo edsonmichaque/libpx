@@ -1,6 +1,9 @@
 package libpx
 
-type Error struct{}
+type Error struct {
+	Code    string
+	Message string
+}
 
 func (e Error) Error() string {
 	return ""
@@ -9,5 +12,11 @@ func (e Error) Error() string {
 type InvalidCreditCardError struct{}
 
 func (e InvalidCreditCardError) Error() string {
+	return ""
+}
+
+type NotSupportedError struct{}
+
+func (n NotSupportedError) Error() string {
 	return ""
 }

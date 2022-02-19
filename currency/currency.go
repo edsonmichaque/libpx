@@ -7,6 +7,7 @@ import (
 
 type Currency struct {
 	Code      string
+	Symbol    string
 	Precision int
 }
 
