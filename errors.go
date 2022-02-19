@@ -1,4 +1,4 @@
-package libpay
+package libpx
 
 type Error struct{}
 

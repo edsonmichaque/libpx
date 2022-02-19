@@ -1,5 +1,5 @@
-module github.com/edsonmichaque/libpay-go
+module github.com/edsonmichaque/libpx
 
 go 1.17
 
-replace github.com/edsonmichaque/libpay-go => ./
+replace github.com/edsonmichaque/libpx => ./

@@ -1,4 +1,4 @@
-package libpay
+package libpx
 
 type Purchase struct{}
 
@@ -58,3 +58,20 @@ func (c CreditCard) Validate() error {
 }
 
 type Void struct{}
+
+type Capabilities struct {
+	Currencies []string
+	Countries  []string
+	Features   []string
+}
+
+type Currency struct {
+	Code      string
+	Name      string
+	Number    string
+	Precision int
+}
+
+var (
+	MZN = Currency{Code: "MZN", Precision: 2}
+)

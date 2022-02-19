@@ -1,4 +1,11 @@
-package libpay
+package libpx
+
+import (
+	"fmt"
+	"strconv"
+
+	"github.com/edsonmichaque/libpx/currency"
+)
 
 type Gateway interface {
 	Authorize(CreditCard, Amount, ...Option) (*Authorization, error)
@@ -18,8 +25,16 @@ type ImprovedGateway interface {
 }
 
 type Amount struct {
-	Currency string
+	Currency currency.Currency
 	Value    int64
+}
+
+func (a Amount) Format() string {
+	amount := a.Value / 100.0
+
+	tpl := a.Currency.Code + " %." + strconv.Itoa(a.Currency.Precision) + "f"
+
+	return fmt.Sprintf(tpl, amount)
 }
 
 type Option func(*Options)
