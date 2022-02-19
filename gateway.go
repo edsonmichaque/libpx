@@ -1,12 +1,20 @@
 package libpay
 
 type Gateway interface {
-	Authorize(card Card, amount Amount, opts ...Option) (*Authorization, error)
-	Capture(auth Authorization, amount Amount, opts ...Option) (*Capture, error)
-	Purchase(auth Authorization, amount Amount, opts ...Option) (*Purchase, error)
-	Refund(auth Authorization, amount Amount) (*Refund, error)
-	Void(auth Authorization) (*Capture, error)
-	Verify(card Card, opts ...Option) (*Verification, error)
+	Authorize(CreditCard, Amount, ...Option) (*Authorization, error)
+	Capture(Authorization, Amount, ...Option) (*Capture, error)
+	Purchase(Authorization, Amount, ...Option) (*Purchase, error)
+	Refund(Authorization, Amount) (*Refund, error)
+	Void(Authorization) (*Void, error)
+	Verify(CreditCard, ...Option) (*Verification, error)
+}
+
+type ImprovedGateway interface {
+	Gateway
+	Credit(CreditCard, Amount, ...Option)
+	Recurring(CreditCard, Amount, ...Option)
+	Store(CreditCard, ...Option)
+	Unstore(CreditCard, ...Option)
 }
 
 type Amount struct {
@@ -17,20 +25,20 @@ type Amount struct {
 type Option func(*Options)
 
 type Options struct {
-	ShippingAddress   string
-	BillingAddress    string
+	ShippingAddress   Address
+	BillingAddress    Address
 	IP                string
 	Email             string
 	AdditionalOptions []AdditionalOption
 }
 
-func WithShippingAddress(a string) Option {
+func WithShippingAddress(a Address) Option {
 	return func(o *Options) {
 		o.ShippingAddress = a
 	}
 }
 
-func WithBillingAddress(a string) Option {
+func WithBillingAddress(a Address) Option {
 	return func(o *Options) {
 		o.BillingAddress = a
 	}
