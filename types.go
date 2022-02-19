@@ -56,3 +56,5 @@ type CreditCard struct {
 func (c CreditCard) Validate() error {
 	return nil
 }
+
+type Void struct{}
