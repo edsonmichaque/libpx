@@ -30,7 +30,7 @@ type Amount struct {
 }
 
 func (a Amount) Format() string {
-	amount := a.Value / 100.0
+	amount := float64(a.Value) / 100
 
 	tpl := a.Currency.Code + " %." + strconv.Itoa(a.Currency.Precision) + "f"
 
