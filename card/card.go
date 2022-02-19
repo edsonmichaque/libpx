@@ -7,7 +7,7 @@ type Type uint
 const (
 	Credit Type = iota
 	Debit
-	PrePaif
+	PrePaid
 )
 
 type Network uint
@@ -15,7 +15,6 @@ type Network uint
 const (
 	Visa Network = iota
 	MasterCard
-	Amex
 )
 
 type Card struct {
@@ -30,5 +29,5 @@ type Card struct {
 }
 
 func (c Card) Validate() error {
-	return errors.New("")
+	return errors.New("not valid")
 }
