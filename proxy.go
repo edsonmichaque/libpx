@@ -1,21 +1,52 @@
 package libpx
 
-import "github.com/edsonmichaque/libpx/card"
+import (
+	"github.com/edsonmichaque/libpx/card"
+	"github.com/edsonmichaque/libpx/schema"
+)
 
-func Create(p Provider) Proxy {
-	return Proxy{
+func Build(p Provider) Wrapper {
+	return Wrapper{
 		provider: p,
 	}
 }
 
-type Proxy struct {
+type Wrapper struct {
 	provider Provider
 }
 
-func (p Proxy) Configure(args ...ConfigOption) error {
-	return p.provider.Configure(args...)
+func (g Wrapper) Configure(args ...ConfigOption) error {
+	if err := g.enforceSchema(g.provider.Schema(), args...); err != nil {
+		return err
+	}
+
+	return g.provider.Configure(args...)
 }
 
-func (p Proxy) Authorize(c card.Card, amount Amount, opts ...Option) (*Authorization, error) {
-	return p.provider.Authorize(c, amount, opts...)
+func (g Wrapper) Authorize(card card.Card, amount Amount, opts ...Option) (*Authorization, error) {
+	return g.provider.Authorize(card, amount, opts...)
+}
+
+func (g Wrapper) Capture(auth Authorization, amount Amount, opts ...Option) (*Capture, error) {
+	return g.provider.Capture(auth, amount, opts...)
+}
+
+func (g Wrapper) Purchase(auth Authorization, amount Amount, opts ...Option) (*Purchase, error) {
+	return g.provider.Purchase(auth, amount, opts...)
+}
+
+func (g Wrapper) Refund(auth Authorization, amount Amount) (*Refund, error) {
+	return g.provider.Refund(auth, amount)
+}
+
+func (g Wrapper) Void(auth Authorization) (*Void, error) {
+	return g.provider.Void(auth)
+}
+
+func (g Wrapper) Verify(card card.Card, opts ...Option) (*Verification, error) {
+	return g.provider.Verify(card, opts...)
+}
+
+func (g Wrapper) enforceSchema(schema map[string]schema.Schema, args ...ConfigOption) error {
+	return nil
 }

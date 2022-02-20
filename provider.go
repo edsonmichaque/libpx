@@ -33,15 +33,16 @@ func WithConfig(name string, value interface{}) ConfigOption {
 }
 
 type Provider interface {
+	SupportedSources() []string
 	Schema() map[string]schema.Schema
 	Currencies() []currency.Currency
 	Configure(args ...ConfigOption) error
 	Authorize(card.Card, Amount, ...Option) (*Authorization, error)
-	// Capture(Authorization, Amount, ...Option) (*Capture, error)
-	// Purchase(Authorization, Amount, ...Option) (*Purchase, error)
-	// Refund(Authorization, Amount) (*Refund, error)
-	// Void(Authorization) (*Void, error)
-	// Verify(card.Card, ...Option) (*Verification, error)
+	Capture(Authorization, Amount, ...Option) (*Capture, error)
+	Purchase(Authorization, Amount, ...Option) (*Purchase, error)
+	Refund(Authorization, Amount) (*Refund, error)
+	Void(Authorization) (*Void, error)
+	Verify(card.Card, ...Option) (*Verification, error)
 }
 
 type Amount struct {

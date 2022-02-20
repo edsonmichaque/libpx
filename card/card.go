@@ -31,3 +31,7 @@ type Card struct {
 func (c Card) Validate() error {
 	return errors.New("not valid")
 }
+
+func (c Card) Get(string) string {
+	return ""
+}
