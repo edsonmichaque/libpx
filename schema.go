@@ -3,9 +3,9 @@ package libpx
 type SchemaType uint
 
 const (
-	SchemaTypeInt SchemaType = iota
-	SchameTypeInt32
-	SchemaTypeInt64
+	SchemaInt SchemaType = iota
+	SchameInt32
+	SchemaInt64
 )
 
 type Schema struct {
