@@ -1,9 +1,5 @@
 package libpx
 
-import (
-	"gitlab.com/edsonmichaque/libpx/schema"
-)
-
 func Build(p Provider) Wrapper {
 	return Wrapper{
 		provider: p,
@@ -14,7 +10,7 @@ type Wrapper struct {
 	provider Provider
 }
 
-func (g Wrapper) Configure(args ...ConfigOption) error {
+func (g Wrapper) Configure(args ...ProviderConfigOption) error {
 	if err := g.enforceSchema(g.provider.Schema(), args...); err != nil {
 		return err
 	}
@@ -46,6 +42,6 @@ func (g Wrapper) Verify(card Card, opts ...Option) (*Verification, error) {
 	return g.provider.Verify(card, opts...)
 }
 
-func (g Wrapper) enforceSchema(schema map[string]schema.Schema, args ...ConfigOption) error {
+func (g Wrapper) enforceSchema(schema map[string]Schema, args ...ProviderConfigOption) error {
 	return nil
 }

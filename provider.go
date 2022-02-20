@@ -2,40 +2,13 @@ package libpx
 
 import (
 	"gitlab.com/edsonmichaque/libpx/currency"
-	"gitlab.com/edsonmichaque/libpx/schema"
 )
-
-type Config struct {
-	Name  string
-	Value interface{}
-}
-
-type Configs []Config
-
-type ConfigOption func(*Configs)
-
-func WithConfig(name string, value interface{}) ConfigOption {
-	return func(c *Configs) {
-
-		var cs []Config
-		if c != nil {
-			cs = []Config(*c)
-		} else {
-			cs = make([]Config, 0)
-		}
-
-		cs = append(cs, Config{Name: name, Value: value})
-		aux := Configs(cs)
-
-		c = &aux
-	}
-}
 
 type Provider interface {
 	SupportedSources() []string
-	Schema() map[string]schema.Schema
+	Schema() map[string]Schema
 	Currencies() []currency.Currency
-	Configure(args ...ConfigOption) error
+	Configure(args ...ProviderConfigOption) error
 	Authorize(Card, Amount, ...Option) (*Authorization, error)
 	Capture(Authorization, Amount, ...Option) (*Capture, error)
 	Purchase(Authorization, Amount, ...Option) (*Purchase, error)
@@ -48,3 +21,26 @@ type Amount struct {
 	Currency currency.Currency
 	Value    int64
 }
+
+type Purchase struct{}
+
+type Verification struct{}
+
+type Refund struct{}
+
+type Capture struct{}
+
+type Authorization struct{}
+
+type Address struct {
+	Name     string
+	Address1 string
+	Address2 string
+	City     string
+	State    string
+	Country  string
+	Zip      string
+	Phone    string
+}
+
+type Void struct{}
