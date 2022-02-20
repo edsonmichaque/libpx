@@ -1,7 +1,8 @@
 package libpx
 
 import (
-	"gitlab.com/edsonmichaque/libpx/card"
+	"errors"
+
 	"gitlab.com/edsonmichaque/libpx/currency"
 	"gitlab.com/edsonmichaque/libpx/schema"
 )
@@ -37,15 +38,28 @@ type Provider interface {
 	Schema() map[string]schema.Schema
 	Currencies() []currency.Currency
 	Configure(args ...ConfigOption) error
-	Authorize(card.Card, Amount, ...Option) (*Authorization, error)
+	Authorize(Card, Amount, ...Option) (*Authorization, error)
 	Capture(Authorization, Amount, ...Option) (*Capture, error)
 	Purchase(Authorization, Amount, ...Option) (*Purchase, error)
 	Refund(Authorization, Amount) (*Refund, error)
 	Void(Authorization) (*Void, error)
-	Verify(card.Card, ...Option) (*Verification, error)
+	Verify(Card, ...Option) (*Verification, error)
 }
 
 type Amount struct {
 	Currency currency.Currency
 	Value    int64
+}
+
+type Card struct {
+	Number          string
+	ExpirationMonth string
+	ExpirationYear  string
+	CVV             string
+	FirstName       string
+	LastName        string
+}
+
+func (c Card) Validate() error {
+	return errors.New("not valid")
 }
