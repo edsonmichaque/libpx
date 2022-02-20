@@ -3,6 +3,7 @@ package libpx
 import (
 	"errors"
 
+	"gitlab.com/edsonmichaque/libpx/card"
 	"gitlab.com/edsonmichaque/libpx/currency"
 	"gitlab.com/edsonmichaque/libpx/schema"
 )
@@ -52,6 +53,8 @@ type Amount struct {
 }
 
 type Card struct {
+	Type            card.Type
+	Network         card.Network
 	Number          string
 	ExpirationMonth string
 	ExpirationYear  string
