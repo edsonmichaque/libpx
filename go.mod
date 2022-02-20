@@ -1,5 +1,5 @@
-module github.com/edsonmichaque/libpx
+module gitlab.com/edsonmichaque/libpx
 
 go 1.17
 
-replace github.com/edsonmichaque/libpx => ./
+replace gitlab.com/edsonmichaque/libpx => ./

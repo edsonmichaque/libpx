@@ -1,8 +1,8 @@
 package libpx
 
 import (
-	"github.com/edsonmichaque/libpx/card"
-	"github.com/edsonmichaque/libpx/schema"
+	"gitlab.com/edsonmichaque/libpx/card"
+	"gitlab.com/edsonmichaque/libpx/schema"
 )
 
 func Build(p Provider) Wrapper {

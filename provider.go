@@ -1,9 +1,9 @@
 package libpx
 
 import (
-	"github.com/edsonmichaque/libpx/card"
-	"github.com/edsonmichaque/libpx/currency"
-	"github.com/edsonmichaque/libpx/schema"
+	"gitlab.com/edsonmichaque/libpx/card"
+	"gitlab.com/edsonmichaque/libpx/currency"
+	"gitlab.com/edsonmichaque/libpx/schema"
 )
 
 type Config struct {
