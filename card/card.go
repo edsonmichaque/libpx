@@ -1,6 +1,9 @@
 package card
 
-import "errors"
+import (
+	"errors"
+	"strings"
+)
 
 type Type uint
 
@@ -29,5 +32,13 @@ type Card struct {
 }
 
 func (c Card) Validate() error {
-	return errors.New("not valid")
+	return c.validate()
+}
+
+func (c Card) validate() error {
+	if strings.HasPrefix(c.Number, "4") {
+		return nil
+	}
+
+	return errors.New("")
 }
