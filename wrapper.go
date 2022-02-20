@@ -1,7 +1,6 @@
 package libpx
 
 import (
-	"gitlab.com/edsonmichaque/libpx/card"
 	"gitlab.com/edsonmichaque/libpx/schema"
 )
 
@@ -23,7 +22,7 @@ func (g Wrapper) Configure(args ...ConfigOption) error {
 	return g.provider.Configure(args...)
 }
 
-func (g Wrapper) Authorize(card card.Card, amount Amount, opts ...Option) (*Authorization, error) {
+func (g Wrapper) Authorize(card Card, amount Amount, opts ...Option) (*Authorization, error) {
 	return g.provider.Authorize(card, amount, opts...)
 }
 
@@ -43,7 +42,7 @@ func (g Wrapper) Void(auth Authorization) (*Void, error) {
 	return g.provider.Void(auth)
 }
 
-func (g Wrapper) Verify(card card.Card, opts ...Option) (*Verification, error) {
+func (g Wrapper) Verify(card Card, opts ...Option) (*Verification, error) {
 	return g.provider.Verify(card, opts...)
 }
 
